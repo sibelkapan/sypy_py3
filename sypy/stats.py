@@ -147,11 +147,11 @@ class Stats():
         matrix_dim = adj_matrix.shape
 
         trans_matrix = np.empty(matrix_dim)
-        for row in xrange(matrix_dim[0]):
+        for row in range(matrix_dim[0]):
             node_degree = adj_matrix[row].sum()
             if node_degree == 0:
                 raise Exception("The graph has disconnected components")
-            for col in xrange(matrix_dim[1]):
+            for col in range(matrix_dim[1]):
                 trans_matrix[row,col] = adj_matrix[row, col]/(float)(node_degree)
 
         eigen_vals = np.linalg.eigvalsh(trans_matrix)
@@ -190,7 +190,7 @@ class Stats():
             this_cc["transitivity"] = nx.transitivity(subgraph)
 
             eccentricity = nx.eccentricity(subgraph)
-            ecc_values = eccentricity.values()
+            ecc_values = list(eccentricity.values())
             this_cc["diameter"] = max(ecc_values)
             this_cc["radius"] = min(ecc_values)
 
@@ -329,7 +329,7 @@ class Stats():
 
     def __index_by_comm(self, node_comms):
         comms = {}
-        for node, comm_index in node_comms.iteritems():
+        for node, comm_index in node_comms.items():
             comms.setdefault(comm_index, []).append(node)
 
         return comms
@@ -380,7 +380,7 @@ class Stats():
         last_comms = dendogram[level]
 
         new_comms = {}
-        for comm_index, comm in comms.iteritems():
+        for comm_index, comm in comms.items():
             new_comm = []
             for comm_node in comm:
                 new_comm += last_comms[comm_node]
@@ -394,7 +394,7 @@ class Stats():
 
     def __aggregate_communities(self, structure, new_comms):
         new_structure = nx.Graph()
-        for comm_index in new_comms.keys():
+        for comm_index in list(new_comms.keys()):
             new_structure.add_node(comm_index)
 
         for comm_index in new_structure:
@@ -441,8 +441,8 @@ class Stats():
         max_modularity = -0.5
         best_comms = {}
         stats = self.graph.get_graph_stats()
-        for level, comms in dendogram.iteritems():
-            partitions = comms.values()
+        for level, comms in dendogram.items():
+            partitions = list(comms.values())
             modularity = stats.modularity(partitions)
             if modularity > max_modularity:
                 max_modularity = modularity

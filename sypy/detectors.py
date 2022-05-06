@@ -307,7 +307,7 @@ class SybilRankDetector(BaseSybilDetector):
 
     def __propagate_network_trust(self, network_trust):
         updated_trust = {}
-        for node, trust in network_trust.iteritems():
+        for node, trust in network_trust.items():
             new_trust = 0.0
             neighbors = self.network.graph.structure.neighbors(node)
 
@@ -320,12 +320,12 @@ class SybilRankDetector(BaseSybilDetector):
         return updated_trust
 
     def __normalize_and_rank_network_trust(self, network_trust):
-        for node, trust in network_trust.iteritems():
+        for node, trust in network_trust.items():
             node_degree = self.network.graph.structure.degree(node)
             network_trust[node] = trust / (float)(node_degree)
 
         ranked_trust = sorted(
-            network_trust.iteritems(),
+            iter(network_trust.items()),
             key=operator.itemgetter(1)
         )
 
@@ -430,7 +430,7 @@ class SybilPredictDetector(BaseSybilDetector):
 
     def __propagate_network_trust(self, network_trust):
         updated_trust = {}
-        for node, trust in network_trust.iteritems():
+        for node, trust in network_trust.items():
             new_trust = 0.0
             neighbors = self.network.graph.structure.neighbors(node)
 
@@ -448,12 +448,12 @@ class SybilPredictDetector(BaseSybilDetector):
         return updated_trust
 
     def __normalize_and_rank_network_trust(self, network_trust):
-        for node, trust in network_trust.iteritems():
+        for node, trust in network_trust.items():
             node_weight = self.network.graph.structure.degree(node, weight="weight")
             network_trust[node] = trust / (float)(node_weight)
 
         ranked_trust = sorted(
-            network_trust.iteritems(),
+            iter(network_trust.items()),
             key=operator.itemgetter(1)
         )
 
@@ -559,7 +559,7 @@ class SybilGuardDetector(BaseSybilDetector):
 
     def __get_walk_edges(self, walk):
         edges = []
-        for index in xrange(len(walk)-1):
+        for index in range(len(walk)-1):
             edges.append(
                 (walk[index], walk[index+1])
             )
@@ -651,7 +651,7 @@ class SybilLimitDetector(BaseSybilDetector):
 
         for node in nodes:
             instance_tails = []
-            for instance_index in xrange(num_instances):
+            for instance_index in range(num_instances):
                 walk = [node]
 
                 ingress_node = node

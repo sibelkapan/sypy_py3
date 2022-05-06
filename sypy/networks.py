@@ -122,10 +122,9 @@ class Network:
         honest_handle.set_label("Honest")
         handles.append(honest_handle)
 
-        sybil_nodes = range(
+        sybil_nodes = list(range(
             self.left_region.graph.structure.order(),
-            self.graph.order()
-        )
+            self.graph.order()))
 
         sybil_handle = nx.draw_networkx_nodes(
             self.right_region.graph.structure,

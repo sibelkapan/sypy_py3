@@ -20,10 +20,10 @@ __author__ = "Yazan Boshmaf"
 __email__ = "boshmaf@ece.ubc.ca"
 __version__ = "0.1.0"
 
-from graphs import *
-from regions import *
-from networks import *
-from detectors import *
-from stats import *
-from results import *
-from benchmark import *
+from .graphs import *
+from .regions import *
+from .networks import *
+from .detectors import *
+from .stats import *
+from .results import *
+from .benchmark import *

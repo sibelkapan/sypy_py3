@@ -36,7 +36,7 @@ class SimpleDetectorBenchmark:
 
         self.values = values
         if not self.values:
-            self.values = [ i/10.0 for i in xrange(0,11) ]
+            self.values = [ i/10.0 for i in range(0,11) ]
 
         self.curve = {
             "fpr": [],
@@ -169,8 +169,8 @@ class MultipleDetectorsBenchmark:
             raise Exception("Invalid number of thresholds")
 
         self.values = values
-        if not self.values:
-            self.values = [ [i/10.0 for i in xrange(0,11)] ]*len(self.detectors)
+        if not self.values:self.values = [ [i/10.0 for i in range(0,11)] ]*len(self.detectors)
+            
 
     def run(self):
         for index, detector_class in enumerate(self.detectors):
@@ -304,7 +304,7 @@ class AttackEdgesDetectorsBenchmark:
             left = len(self.multi_benchmark.network.left_region.graph.nodes())
             right = len(self.multi_benchmark.network.right_region.graph.nodes())
             max_edges = 2 * (left + right)
-            self.values = [1] + [ i*100 for i in range(1, (max_edges/100)+1) ]
+            self.values = [1] + [ i*100 for i in range(1, (max_edges//100)+1) ]
 
         self.curves = {}
         for detector in self.multi_benchmark.detectors:

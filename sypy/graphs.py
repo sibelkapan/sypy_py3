@@ -86,7 +86,7 @@ class ImportedGEXFGraph(BaseGraph):
         cc = nx.connected_component_subgraphs(self.structure)
         self.structure = max(cc, key=len)
 
-        for trial in xrange(num_iterations):
+        for trial in range(num_iterations):
             to_remove = []
             for node in self.structure:
                 if self.structure.degree(node) == 1:
@@ -220,7 +220,7 @@ class GirvanNewmanCommunityGraph(BaseGraph):
             (float)(self.comm_size * (self.num_comm - 1))
         prob_in = 0.5 - (float)(self.avg_intercomm / self.comm_size)
 
-        self.structure.add_nodes_from(range(self.num_comm * self.comm_size))
+        self.structure.add_nodes_from(list(range(self.num_comm * self.comm_size)))
 
         for left_node in self.structure.nodes():
             nx.set_node_attributes(
@@ -274,15 +274,15 @@ class LFRCommunityGraph(BaseGraph):
             np.random.seed(seed)
 
         comm_sizes = self.__get_community_sizes()
-        self.structure.add_nodes_from(range(sum(comm_sizes)))
+        self.structure.add_nodes_from(list(range(sum(comm_sizes))))
 
         try:
             self.__construct_communities(comm_sizes)
             self.__connect_communities(comm_sizes)
 
-        except ValueError, error:
+        except ValueError as error:
             if self.tries != 0:
-                print "{0}, retrying".format(error)
+                print("{0}, retrying".format(error))
                 self.tries -= 1
                 self.__update_structure()
             else:
@@ -291,10 +291,9 @@ class LFRCommunityGraph(BaseGraph):
     def __construct_communities(self, comm_sizes):
         for i, comm_size in enumerate(comm_sizes):
             comm_degrees = self.__get_community_degrees(comm_size)
-            comm_nodes = range(
+            comm_nodes = list(range(
                 sum(comm_sizes[:i]),
-                sum(comm_sizes[:i+1])
-            )
+                sum(comm_sizes[:i+1])))
             nx.set_node_attributes(
                 self.structure,
                 "community",
@@ -313,10 +312,9 @@ class LFRCommunityGraph(BaseGraph):
 
     def __connect_communities(self, comm_sizes):
         for i, comm_size in enumerate(comm_sizes):
-            comm_nodes = range(
+            comm_nodes = list(range(
                 sum(comm_sizes[:i]),
-                sum(comm_sizes[:i+1])
-            )
+                sum(comm_sizes[:i+1])))
             other_nodes = list(
                 set(self.structure.nodes()) - set(comm_nodes)
             )
