@@ -102,7 +102,7 @@ if __name__ == "__main__":
     edges_benchmark.run()
     edges_benchmark.plot_curve(file_name="attack_edge_vs_auc")
 
-    answer = raw_input("Visualize [y/n]: ")
+    answer = input("Visualize [y/n]: ")
     if answer == "y":
-        print "This will take some time..."
+        print("This will take some time...")
         social_network.visualize()
